@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>フリーランス節税3制度チェックリスト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --title-color: #1a1a2e;
+            --text-color: #333333;
+            --advice-color: #555555;
+            --prep-bg: #f0f4f8;
+            --practice-bg: #fdf2f2;
+            --apply-bg: #f0fdf4;
+            --accent-color: #1a1a2e;
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            margin: 40px 20px;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--title-color); font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .subtitle { font-size: 1.1rem; color: var(--advice-color); font-weight: 400; }
+        section { margin-bottom: 30px; padding: 30px; border-radius: 12px; }
+        .section-prep { background-color: var(--prep-bg); }
+        .section-practice { background-color: var(--practice-bg); }
+        .section-apply { background-color: var(--apply-bg); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 2px;
+        }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 20px; cursor: pointer; }
+        .checkbox-wrapper { position: relative; margin-right: 15px; margin-top: 4px; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+        input[type="checkbox"]:checked { background-color: var(--accent-color); }
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+        .content-wrapper { flex: 1; }
+        .item-text { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .advice-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--advice-color);
+            background: rgba(255,255,255,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .footer-note { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; }
+        .progress-bar-wrap { background: #e0e0e0; border-radius: 8px; height: 10px; margin-bottom: 30px; }
+        .progress-bar { background: var(--accent-color); height: 10px; border-radius: 8px; transition: width 0.4s; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: var(--advice-color); margin-bottom: 20px; }
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; padding: 40px 60px; }
+            .no-print { display: none; }
+            section { break-inside: avoid; border: 1px solid #eee; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+        .btn-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>フリーランス節税3制度チェックリスト</h1>
+            <p class="subtitle">青色申告 × 小規模企業共済 × iDeCo を使いこなして手取りを増やす</p>
+        </header>
+
+        <div class="progress-text" id="progressText">0 / 19 完了</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+        
+<section class="section-prep">
+<h2>【準備編】制度を活用する前に確認すること</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">開業届を提出済みである</span>
+<span class="advice-text">税務署への開業届が節税3制度の前提条件。未提出の場合は最寄りの税務署かe-Taxで今すぐ提出できます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">青色申告承認申請書を提出済みである</span>
+<span class="advice-text">新規開業の場合は開業日から2ヶ月以内、既存事業者は翌年分から希望なら3月15日までに提出が必要。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">e-Taxの利用環境を整えている（マイナンバーカード方式またはID・パスワード方式）</span>
+<span class="advice-text">e-Tax申告が65万円控除（vs 55万円）の必須条件。マイナンバーカードがある方はマイナポータル連携が最もスムーズ。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">会計ソフト（freee・マネーフォワード等）で複式簿記の記帳をしている</span>
+<span class="advice-text">複式簿記が65万円控除の条件。主要な会計ソフトを使っていれば自動的に複式簿記になります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">自分の申告区分（事業所得か雑所得か）を確認している</span>
+<span class="advice-text">小規模企業共済は事業所得での申告が加入条件。雑所得での申告の場合は加入できないため要確認。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">生活費6ヶ月分相当の緊急予備費を確保している</span>
+<span class="advice-text">iDeCoは60歳まで引き出せないため、緊急予備費を確保してから加入するのが鉄則。</span>
+</div></label>
+
+</section>
+<section class="section-practice">
+<h2>【実践編】各制度の手続きを進める</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">直近の確定申告書で「青色申告特別控除額」が65万円か確認した</span>
+<span class="advice-text">第一表の「所得から差し引かれる金額」欄を確認。55万円なら来年からe-Tax申告に切り替えるだけでOK。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">小規模企業共済の加入申込書を入手した（商工中金または中小機構サイト）</span>
+<span class="advice-text">取扱窓口は中小機構サイト（skyosai.smrj.go.jp）の「窓口を探す」から検索できます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">小規模企業共済の掛金額を決定した（月1,000円〜70,000円、500円単位）</span>
+<span class="advice-text">迷ったら月1万円からスタート。後からいつでも変更できます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">小規模企業共済の申し込みを完了した</span>
+<span class="advice-text">申込から数週間で初回振替が開始されます。今月動けば今年の節税に間に合います。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">iDeCoの金融機関（SBI証券・楽天証券等）を選んだ</span>
+<span class="advice-text">口座管理手数料が0円のネット証券がおすすめ。迷ったらどちらかですぐ動く。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">iDeCoの口座開設申込を完了した</span>
+<span class="advice-text">口座開設まで1〜2ヶ月かかる場合あり。早めに動くほど節税開始が早まります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">iDeCoの掛金額と運用商品を設定した</span>
+<span class="advice-text">月2万〜3万円から始めて、余裕ができたら増やすのが現実的。運用商品は低コストインデックスファンドか定期預金から選ぶ。</span>
+</div></label>
+
+</section>
+<section class="section-apply">
+<h2>【応用編】節税効果を最大化するための確認</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">iDeCoと国民年金基金の合算が月68,000円を超えていないか確認した</span>
+<span class="advice-text">国民年金基金と合算して月68,000円が上限。両方加入の場合は金額調整が必要。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">3制度適用後の課税所得ベースでふるさと納税の上限額を試算した</span>
+<span class="advice-text">「ふるさとチョイス」等のシミュレーターで正確な上限を確認。控除後の数値で計算するのがポイント。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">自宅兼事務所の家賃・通信費の按分割合を設定して経費計上している</span>
+<span class="advice-text">業務使用割合（面積比・時間比）で按分。家賃なら40〜60%が認められるケースが多い。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">書籍・勉強費用・クラウドサービス利用料の経費計上漏れがないか確認した</span>
+<span class="advice-text">業務に関連するものは経費になります。領収書や利用明細を確認して計上漏れを防ぎましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">来年の確定申告に向けた節税シミュレーションを実施した</span>
+<span class="advice-text">今年中の動き次第で来年の申告が変わります。ChatGPT/Claudeへの質問テンプレートも活用してみてください。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">税理士または専門家に確認すべき事項（専従者給与・受取設計等）をリストアップした</span>
+<span class="advice-text">年収が上がるほど専門家との連携が節税効果を高めます。不明点はプロに聞くのが確実。</span>
+</div></label>
+
+</section>
+
+
+        <div class="footer-note">© ぺんつ - 特典チェックリスト</div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">PDFとして保存 / 印刷</button>
+
+    <script>
+        const STORAGE_KEY = 'checklist_' + location.pathname;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+
+        // 保存済み状態を復元
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((cb, i) => {
+            if (saved[i]) cb.checked = true;
+        });
+        updateProgress();
+
+        // 変更時に保存
+        checkboxes.forEach((cb, i) => {
+            cb.addEventListener('change', () => {
+                saved[i] = cb.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const done = [...checkboxes].filter(cb => cb.checked).length;
+            document.getElementById('progressText').textContent = done + ' / ' + total + ' 完了';
+            document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+        }
+    </script>
+</body>
+</html>
