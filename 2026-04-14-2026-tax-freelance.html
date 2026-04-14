@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026年フリーランス節税準備チェックリスト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --title-color: #1a1a2e;
+            --text-color: #333333;
+            --advice-color: #555555;
+            --prep-bg: #f0f4f8;
+            --practice-bg: #fdf2f2;
+            --apply-bg: #f0fdf4;
+            --accent-color: #1a1a2e;
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            margin: 40px 20px;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--title-color); font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .subtitle { font-size: 1.1rem; color: var(--advice-color); font-weight: 400; }
+        section { margin-bottom: 30px; padding: 30px; border-radius: 12px; }
+        .section-prep { background-color: var(--prep-bg); }
+        .section-practice { background-color: var(--practice-bg); }
+        .section-apply { background-color: var(--apply-bg); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 2px;
+        }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 20px; cursor: pointer; }
+        .checkbox-wrapper { position: relative; margin-right: 15px; margin-top: 4px; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+        input[type="checkbox"]:checked { background-color: var(--accent-color); }
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+        .content-wrapper { flex: 1; }
+        .item-text { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .advice-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--advice-color);
+            background: rgba(255,255,255,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .footer-note { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; }
+        .progress-bar-wrap { background: #e0e0e0; border-radius: 8px; height: 10px; margin-bottom: 30px; }
+        .progress-bar { background: var(--accent-color); height: 10px; border-radius: 8px; transition: width 0.4s; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: var(--advice-color); margin-bottom: 20px; }
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; padding: 40px 60px; }
+            .no-print { display: none; }
+            section { break-inside: avoid; border: 1px solid #eee; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+        .btn-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>2026年フリーランス節税準備チェックリスト</h1>
+            <p class="subtitle">「今年中にやるべき節税アクション」を5分で確認する</p>
+        </header>
+
+        <div class="progress-text" id="progressText">0 / 16 完了</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+        
+<section class="section-prep">
+<h2>【準備編】制度を整える</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">青色申告選択届出書を提出済みか確認する</span>
+<span class="advice-text">今年初めてフリーランスになった場合、開業から2ヶ月以内が提出期限です。未提出なら税務署かe-Taxで手続きを。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">クラウド会計ソフト（Freeeまたはマネーフォワードクラウド）を導入する</span>
+<span class="advice-text">複式簿記での記帳が65万円控除の条件。クラウド会計ソフトを使えば自動で複式簿記になります。月額1,000円前後で使えます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">e-Taxで申告できる環境を確認する（マイナンバーカード＋スマホ or ID・パスワード方式）</span>
+<span class="advice-text">「確定申告書等作成コーナーでPDF印刷→郵送」はe-Tax申告になりません。マイナンバーカードで直接送信するか、税務署でID・パスワードを発行してもらいましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">iDeCoに未加入の場合、ネット証券（SBI・楽天等）から加入申請を行う</span>
+<span class="advice-text">書類が届くまで1〜2ヶ月かかるので早めに。フリーランスは月最大6.8万円（年81.6万円）が所得控除になります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">小規模企業共済への加入または掛金変更を検討する</span>
+<span class="advice-text">中小機構のウェブサイト（smrj.go.jp）から加入申請できます。掛金は月1,000円〜7万円で全額所得控除。廃業時の退職金にもなります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">インボイス2割特例の終了（2026年9月末）後の課税方式を決める</span>
+<span class="advice-text">3割特例は自動適用（個人事業主）ですが、簡易課税（第5種みなし仕入率50%）との比較を自分の売上で計算して、どちらが有利かを9月末までに確認しましょう。</span>
+</div></label>
+
+</section>
+<section class="section-practice">
+<h2>【実践編】経費と記録を整える</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">今年1月〜3月分の取引をクラウド会計ソフトに入力・連携する</span>
+<span class="advice-text">入力が遅れるほどまとめての作業がつらくなります。月次で入力する習慣を今月から始めましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">自宅兼オフィスの家賃・光熱費・通信費の按分比率を記録する</span>
+<span class="advice-text">「業務に使っている床面積÷全体の床面積」などを記録しておくと、後で根拠として示せます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">業務に使った交通費・書籍代・ソフトウェア代の領収書を保管する</span>
+<span class="advice-text">メールやPDFで届いた領収書はデータで保存することが原則です。クラウド会計ソフトで連携すると自動管理できます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">外注先・業務委託先のインボイス対応状況を確認する</span>
+<span class="advice-text">自分が発注者の立場でもインボイス対応が必要な場合があります。外注費を経費計上する際の仕入税額控除に影響します。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">年間の所得税・住民税・消費税の予想総額を試算する</span>
+<span class="advice-text">年2回の予定納税（7月・11月）に備えて資金を用意しておくと慌てずに済みます。ChatGPTやClaudeに収支を伝えれば概算を出してもらえます。</span>
+</div></label>
+
+</section>
+<section class="section-apply">
+<h2>【応用編】効果を最大化する</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">クラウド会計ソフトが「優良な電子帳簿」要件を満たしているか確認する</span>
+<span class="advice-text">2027年分の申告から青色申告特別控除が75万円に増やせます。「訂正・削除の履歴が残る」「検索機能がある」等の要件をソフトが満たすか確認を。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">iDeCoの運用商品を確認し、長期分散投資の観点で設定を見直す</span>
+<span class="advice-text">定期預金のみで運用している場合、インフレリスクがあります。インデックスファンドとの組み合わせを検討してください。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">来年（2027年分）の節税戦略を概要レベルで立てる</span>
+<span class="advice-text">2027年からは基礎控除が58万円に下がります。その分を「iDeCo増額」「小規模企業共済増額」で補う計画を今から立てておきましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">KSK2（2026年9月24日稼働）を意識した証拠書類の整備を完了する</span>
+<span class="advice-text">AI活用の税務調査に備えて「なぜこの金額を経費にしたか」を説明できる根拠書類（契約書・業務日報・請求書）を整理して保管しておきましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">簡易課税選択届出書の提出タイミングを税理士または税務署に確認する</span>
+<span class="advice-text">2割特例から簡易課税に切り替える場合、課税期間の開始前日までに届出が必要です。2026年中に確認しておきましょう。</span>
+</div></label>
+
+</section>
+
+
+        <div class="footer-note">© ぺんつ - 特典チェックリスト</div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">PDFとして保存 / 印刷</button>
+
+    <script>
+        const STORAGE_KEY = 'checklist_' + location.pathname;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+
+        // 保存済み状態を復元
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((cb, i) => {
+            if (saved[i]) cb.checked = true;
+        });
+        updateProgress();
+
+        // 変更時に保存
+        checkboxes.forEach((cb, i) => {
+            cb.addEventListener('change', () => {
+                saved[i] = cb.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const done = [...checkboxes].filter(cb => cb.checked).length;
+            document.getElementById('progressText').textContent = done + ' / ' + total + ' 完了';
+            document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+        }
+    </script>
+</body>
+</html>
