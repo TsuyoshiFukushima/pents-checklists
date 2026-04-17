@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI課金サービス副業活用チェックリスト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --title-color: #1a1a2e;
+            --text-color: #333333;
+            --advice-color: #555555;
+            --prep-bg: #f0f4f8;
+            --practice-bg: #fdf2f2;
+            --apply-bg: #f0fdf4;
+            --accent-color: #1a1a2e;
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            margin: 40px 20px;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--title-color); font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .subtitle { font-size: 1.1rem; color: var(--advice-color); font-weight: 400; }
+        section { margin-bottom: 30px; padding: 30px; border-radius: 12px; }
+        .section-prep { background-color: var(--prep-bg); }
+        .section-practice { background-color: var(--practice-bg); }
+        .section-apply { background-color: var(--apply-bg); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 2px;
+        }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 20px; cursor: pointer; }
+        .checkbox-wrapper { position: relative; margin-right: 15px; margin-top: 4px; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+        input[type="checkbox"]:checked { background-color: var(--accent-color); }
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+        .content-wrapper { flex: 1; }
+        .item-text { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .advice-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--advice-color);
+            background: rgba(255,255,255,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .footer-note { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; }
+        .progress-bar-wrap { background: #e0e0e0; border-radius: 8px; height: 10px; margin-bottom: 30px; }
+        .progress-bar { background: var(--accent-color); height: 10px; border-radius: 8px; transition: width 0.4s; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: var(--advice-color); margin-bottom: 20px; }
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; padding: 40px 60px; }
+            .no-print { display: none; }
+            section { break-inside: avoid; border: 1px solid #eee; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+        .btn-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI課金サービス副業活用チェックリスト</h1>
+            <p class="subtitle">ChatGPT Plus・Claude Pro・Google AI Pro｜自分に合った1本を3分で選ぶ</p>
+        </header>
+
+        <div class="progress-text" id="progressText">0 / 16 完了</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+        
+<section class="section-prep">
+<h2>【準備編】課金前に確認すること</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">自分の副業ジャンルを「Webライティング」「SNS運用」「プログラミング」「リサーチ代行」のいずれかに絞る</span>
+<span class="advice-text">ジャンルが決まると選ぶべきAIが自動的に絞られます。迷ったら「月に一番多くやる作業」で判断。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">月に何本・何件の案件をこなしたいか目標数を決める</span>
+<span class="advice-text">例：月10本×5,000円＝50,000円。この目標から逆算して、AIに課金するかどうかを判断します。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">現状の1案件あたり作業時間を計測する</span>
+<span class="advice-text">AIを使う前の素の作業時間を測っておくと、導入後のROIを正確に計算できます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">無料版のChatGPT・Claude・Geminiを1週間ずつ試す</span>
+<span class="advice-text">無料版で「使い心地」と「自分の用途との相性」を体感してから有料版を検討するのが最も失敗が少ない。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">月3,200円（Claude Pro / ChatGPT Plus）または2,900円（Google AI Pro）の課金を回収できる案件が1本あるか確認する</span>
+<span class="advice-text">課金前に「回収できる案件」を確保してから課金するのがリスクゼロの始め方。</span>
+</div></label>
+
+</section>
+<section class="section-practice">
+<h2>【実践編】正しく使うための判断軸</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">副業ジャンル別の推奨AIで有料プランを1か月だけ試す（Webライティング→Claude Pro、SNS運用→ChatGPT Plus、リサーチ→Google AI Pro）</span>
+<span class="advice-text">まず1か月。効果を感じたら継続、感じなければ解約。解約はいつでもできます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">Claude Proならプロジェクト機能を作成し、クライアント情報・スタイルガイドを登録する</span>
+<span class="advice-text">プロジェクトにクライアントの要件を登録しておくと、毎回説明せず同じスタイルで文章が生成できます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">ChatGPT PlusならGPTストアで副業ジャンル専用のカスタムGPTを3つ探してブックマークする</span>
+<span class="advice-text">GPTストアには「SEO記事作成」「SNS投稿文作成」など専門特化GPTが多数あります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">プロンプトに「ターゲット読者・目的・トーン・禁止ワード・文字数」の5要素を必ず含める</span>
+<span class="advice-text">この5点を含めるだけで出力品質が劇的に変わります。テンプレートとして保存しておくと便利。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">1案件を「構成→章ごとの本文→編集」の3フェーズに分けてAIを使う</span>
+<span class="advice-text">一気に全部書かせるより、フェーズ分割の方が質が安定します。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">生成した文章の20〜30%は自分でオリジナル加筆する</span>
+<span class="advice-text">体験談・具体例・固有のデータを加えることで、AI検出リスクを下げ、単価アップにつながります。</span>
+</div></label>
+
+</section>
+<section class="section-apply">
+<h2>【応用編】収益を最大化するためのチェック</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">Claude + ChatGPTの2段階ワークフローを試す（ChatGPTでリサーチ→Claudeで文章化）</span>
+<span class="advice-text">最も品質が高い組み合わせ。ただし月6,400円かかるため、先に1本で十分な収益を確保してから検討。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">Google AI ProでGoogleドキュメント・スプレッドシートとの連携を設定する</span>
+<span class="advice-text">請求書作成・収支管理・競合調査レポートの自動化に使えます。副業の事務作業が激減します。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">月ごとに「課金前と課金後の作業時間・月収」を比較して記録する</span>
+<span class="advice-text">ROIを数値で把握することで、課金継続・解約・プランアップグレードの判断が客観的にできます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">X（旧Twitter）で「AI副業実践日記」として発信を始め、案件獲得の導線を作る</span>
+<span class="advice-text">AI活用の発信は副業クライアントの目に留まりやすく、SNS経由の案件獲得につながるケースが増えています。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">3か月後に「1本に絞ったAI」が最適か再評価し、必要なら乗り換えを検討する</span>
+<span class="advice-text">副業ジャンルの変化・収入の変化に合わせてツールも見直す。固執しないことが長期的なコスパ最大化につながります。</span>
+</div></label>
+
+</section>
+
+
+        <div class="footer-note">© ぺんつ - 特典チェックリスト</div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">PDFとして保存 / 印刷</button>
+
+    <script>
+        const STORAGE_KEY = 'checklist_' + location.pathname;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+
+        // 保存済み状態を復元
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((cb, i) => {
+            if (saved[i]) cb.checked = true;
+        });
+        updateProgress();
+
+        // 変更時に保存
+        checkboxes.forEach((cb, i) => {
+            cb.addEventListener('change', () => {
+                saved[i] = cb.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const done = [...checkboxes].filter(cb => cb.checked).length;
+            document.getElementById('progressText').textContent = done + ' / ' + total + ' 完了';
+            document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+        }
+    </script>
+</body>
+</html>
