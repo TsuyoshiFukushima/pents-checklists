@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>106万円の壁撤廃・自分ケース判断チェックリスト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --title-color: #1a1a2e;
+            --text-color: #333333;
+            --advice-color: #555555;
+            --prep-bg: #f0f4f8;
+            --practice-bg: #fdf2f2;
+            --apply-bg: #f0fdf4;
+            --accent-color: #1a1a2e;
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            margin: 40px 20px;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--title-color); font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .subtitle { font-size: 1.1rem; color: var(--advice-color); font-weight: 400; }
+        section { margin-bottom: 30px; padding: 30px; border-radius: 12px; }
+        .section-prep { background-color: var(--prep-bg); }
+        .section-practice { background-color: var(--practice-bg); }
+        .section-apply { background-color: var(--apply-bg); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 2px;
+        }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 20px; cursor: pointer; }
+        .checkbox-wrapper { position: relative; margin-right: 15px; margin-top: 4px; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+        input[type="checkbox"]:checked { background-color: var(--accent-color); }
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+        .content-wrapper { flex: 1; }
+        .item-text { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .advice-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--advice-color);
+            background: rgba(255,255,255,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .footer-note { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; }
+        .progress-bar-wrap { background: #e0e0e0; border-radius: 8px; height: 10px; margin-bottom: 30px; }
+        .progress-bar { background: var(--accent-color); height: 10px; border-radius: 8px; transition: width 0.4s; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: var(--advice-color); margin-bottom: 20px; }
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; padding: 40px 60px; }
+            .no-print { display: none; }
+            section { break-inside: avoid; border: 1px solid #eee; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+        .btn-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>106万円の壁撤廃・自分ケース判断チェックリスト</h1>
+            <p class="subtitle">「社会保険に加入すべきか」を5分で判断する</p>
+        </header>
+
+        <div class="progress-text" id="progressText">0 / 17 完了</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+        
+<section class="section-prep">
+<h2>【準備編】課金前に確認すること</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">雇用契約書で「週の所定労働時間」を確認する</span>
+<span class="advice-text">所定労働時間が週20時間以上かどうかで加入対象が決まります。残業時間は含めず、契約書の数字を確認してください。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">今の月収・年収（概算）を書き出す</span>
+<span class="advice-text">税引き前の額面金額を確認します。通勤手当や残業代は除いて計算するのがポイントです。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">職場の従業員規模を確認する</span>
+<span class="advice-text">従業員が51人以上の企業は現在の加入要件対象。2027年以降は段階的に全企業が対象になります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">配偶者の年収・扶養状況を確認する</span>
+<span class="advice-text">配偶者が会社員の場合、健康保険の扶養要件（自分の年収130万円未満）に該当するかを確認しましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">「税の扶養（配偶者控除）」と「社会保険の扶養」の違いを理解する</span>
+<span class="advice-text">2つは別制度です。税の扶養は年収103万円が目安、社会保険の扶養は130万円が目安（週20時間以上なら加入義務）。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">2026年10月以降、自分が加入対象になるかどうかを確認する</span>
+<span class="advice-text">週20時間以上かつ企業規模要件に該当する場合は加入対象。不明な場合は職場の担当者に確認を。</span>
+</div></label>
+
+</section>
+<section class="section-practice">
+<h2>【実践編】実行するための判断軸</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">自分のケースでの損益分岐点（年収）を試算する</span>
+<span class="advice-text">「社保加入後の手取り」が「今の扶養内の手取り」を上回るのは概ね年収155万円前後です。AIや計算ツールで試算してみましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">「年収を155万円以上に増やす」か「週19時間以下に減らして扶養内に収める」か方針を決める</span>
+<span class="advice-text">どちらが現実的かは、職場の状況・家庭の状況によります。職場に相談できる環境かどうかもポイントです。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">職場の担当者に「2026年10月以降の働き方」について相談する</span>
+<span class="advice-text">相談のタイミングは「2026年10月の3〜6ヶ月前（4月〜7月頃）」が理想です。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">「特例措置（企業による保険料肩代わり）」について職場に確認する</span>
+<span class="advice-text">年収156万円未満の場合、企業が社会保険料の一部を肩代わりできる制度があります。知っているだけで交渉できます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">ChatGPT/Claudeで自分ケースの手取りシミュレーションを実行する</span>
+<span class="advice-text">「週○時間・月収○万円・居住地○○県で、社保加入後の手取りを計算してください」と入力するだけで概算が出ます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">年金事務所またはハローワークで無料相談の予約を取る</span>
+<span class="advice-text">複雑なケース（かけ持ちパート・個人事業主との兼業等）は、専門家に直接確認するのが安全です。</span>
+</div></label>
+
+</section>
+<section class="section-apply">
+<h2>【応用編】効果を最大化するためのチェック</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">厚生年金への加入年数ごとの将来受給額増加を試算する</span>
+<span class="advice-text">日本年金機構の「ねんきんネット」で将来の年金見込み額を確認できます。加入年数が10年増えると月1〜2万円変わる場合があります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">「傷病手当金」「出産手当金」のメリットを家族で確認・共有する</span>
+<span class="advice-text">社会保険加入で利用可能になる給付制度です。病気・出産リスクへの備えとして評価しましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">「子ども・子育て支援金」（2026年4月〜）の上乗せ額を給与明細で確認する</span>
+<span class="advice-text">2026年度は年収の約0.115%（本人負担）が追加されています。年収800万円で月767円。2028年度まで段階的に増加します。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">今後の企業規模要件撤廃スケジュール（2027年〜2035年）を把握する</span>
+<span class="advice-text">現在は対象外でも、2027年以降に対象になる可能性があります。職場の従業員規模と照らし合わせて確認を。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">1年後・3年後の働き方の目標を書き出す</span>
+<span class="advice-text">今の判断が3年後の手取り・年金に直結します。ライフイベント（育児・介護等）も考慮した計画を持つことが大切です。</span>
+</div></label>
+
+</section>
+
+
+        <div class="footer-note">© ぺんつ - 特典チェックリスト</div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">PDFとして保存 / 印刷</button>
+
+    <script>
+        const STORAGE_KEY = 'checklist_' + location.pathname;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+
+        // 保存済み状態を復元
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((cb, i) => {
+            if (saved[i]) cb.checked = true;
+        });
+        updateProgress();
+
+        // 変更時に保存
+        checkboxes.forEach((cb, i) => {
+            cb.addEventListener('change', () => {
+                saved[i] = cb.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const done = [...checkboxes].filter(cb => cb.checked).length;
+            document.getElementById('progressText').textContent = done + ' / ' + total + ' 完了';
+            document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+        }
+    </script>
+</body>
+</html>
