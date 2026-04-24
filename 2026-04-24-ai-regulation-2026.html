@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI規制時代のフリーランス自己点検チェックリスト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --title-color: #1a1a2e;
+            --text-color: #333333;
+            --advice-color: #555555;
+            --prep-bg: #f0f4f8;
+            --practice-bg: #fdf2f2;
+            --apply-bg: #f0fdf4;
+            --accent-color: #1a1a2e;
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            margin: 40px 20px;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--title-color); font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .subtitle { font-size: 1.1rem; color: var(--advice-color); font-weight: 400; }
+        section { margin-bottom: 30px; padding: 30px; border-radius: 12px; }
+        .section-prep { background-color: var(--prep-bg); }
+        .section-practice { background-color: var(--practice-bg); }
+        .section-apply { background-color: var(--apply-bg); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 2px;
+        }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 20px; cursor: pointer; }
+        .checkbox-wrapper { position: relative; margin-right: 15px; margin-top: 4px; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+        input[type="checkbox"]:checked { background-color: var(--accent-color); }
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+        .content-wrapper { flex: 1; }
+        .item-text { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .advice-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--advice-color);
+            background: rgba(255,255,255,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .footer-note { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; }
+        .progress-bar-wrap { background: #e0e0e0; border-radius: 8px; height: 10px; margin-bottom: 30px; }
+        .progress-bar { background: var(--accent-color); height: 10px; border-radius: 8px; transition: width 0.4s; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: var(--advice-color); margin-bottom: 20px; }
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; padding: 40px 60px; }
+            .no-print { display: none; }
+            section { break-inside: avoid; border: 1px solid #eee; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+        .btn-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI規制時代のフリーランス自己点検チェックリスト</h1>
+            <p class="subtitle">「自分の現状がどのくらい対策できているか」を5分で確認する</p>
+        </header>
+
+        <div class="progress-text" id="progressText">0 / 18 完了</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+        
+<section class="section-prep">
+<h2>【準備編】利用・受注開始前に確認すること</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">使用しているAIツール（ChatGPT・Claude・Gemini等）の利用規約を一度は読む</span>
+<span class="advice-text">「商用利用の可否」「生成物の著作権帰属」「EU向け適用条件」の3項目を特に確認。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">利用しているAIサービスの商用利用が自分の用途で認められているか確認する</span>
+<span class="advice-text">無料プランと有料プランで条件が異なる場合がある。プラン変更時にも再確認を。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">使用しているAIツールのEU向け利用条件（EU AI法2026年施行への対応状況）を把握する</span>
+<span class="advice-text">EU圏クライアントと取引する可能性がある場合は必須チェック項目。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">現在受注中および新規受注案件の契約書に「AI利用禁止」条項がないか確認する</span>
+<span class="advice-text">気づかず違反していると後からトラブルになる可能性がある。受注前に必ず確認する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">クライアントの所在国（EU圏かどうか）を把握する</span>
+<span class="advice-text">EU圏クライアントにはEU AI法の透明性原則への配慮が必要。一段高い注意を払う。</span>
+</div></label>
+
+</section>
+<section class="section-practice">
+<h2>【実践編】日常業務で実行していること</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AI生成テキストをそのまま納品せず、必ず自分で加筆・修正する</span>
+<span class="advice-text">「人間の創意を加えた」証拠として、編集前後の比較記録を保存しておくと安心。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AI生成画像を商用利用する際、追加の編集・加工を行う</span>
+<span class="advice-text">プロンプトと編集履歴を保存しておくと著作権保護の根拠になる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">クライアントへのAI利用開示の方針を決める（全開示/一部開示/案件ごとに確認）</span>
+<span class="advice-text">「AI補助利用（人間レビュー付き）」という表現でポジティブに伝えることが可能。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AI生成コンテンツの数値・日付・法律名・制度名にファクトチェックを行う</span>
+<span class="advice-text">AIは誤情報を自信満々に出力することがある。数値・固有名詞は必ず確認する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AI事業者ガイドライン（経産省・総務省）の最新版を確認する（月1回程度）</span>
+<span class="advice-text">meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso で最新版を確認できる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">自分の公開コンテンツ（ブログ・SNS・note）のAI学習設定をオフにする</span>
+<span class="advice-text">XやArtStation等のプラットフォームでAIデータ学習提供をオフに設定できる。</span>
+</div></label>
+
+</section>
+<section class="section-apply">
+<h2>【応用編】効果を最大化するためのチェック</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AI利用方針書（1〜2ページ程度）を作成する</span>
+<span class="advice-text">クライアントから問われた際にすぐ共有できる状態にしておくと信頼感が上がる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">EU圏クライアントとの取引時、AI利用であることと人間レビューを挟んでいることを明示する</span>
+<span class="advice-text">EU AI法の透明性原則への準拠姿勢として、具体的な対応内容を文書で示す。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AI生成物の著作権に関する文化庁の最新見解をチェックする（年1回以上）</span>
+<span class="advice-text">文化庁の「生成AIと著作権」関連ページで最新の見解を確認できる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AI規制対応をポートフォリオやプロフィールに差別化要素として反映する</span>
+<span class="advice-text">「AI利用の透明性を保持」というアピールはコンプライアンス重視の企業に響く。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">使用しているAIツールの学習対策（Glaze・Nightshade等）を検討する（クリエイターの場合）</span>
+<span class="advice-text">自分の作品がAI学習データになることを防ぐツールが実在する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">EU AI法の2026年8月完全施行後の具体的な執行事例を継続確認する予定を立てる</span>
+<span class="advice-text">欧州委員会公式サイトや専門メディアで最新の違反事例・ガイドライン更新を追う。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AI利用に関するリスクと対策をクライアントへのブリーフィング資料に組み込む</span>
+<span class="advice-text">コンサル・開発・デザイン案件での付加価値として提供でき、単価交渉にも使える。</span>
+</div></label>
+
+</section>
+
+
+        <div class="footer-note">© ぺんつ - 特典チェックリスト</div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">PDFとして保存 / 印刷</button>
+
+    <script>
+        const STORAGE_KEY = 'checklist_' + location.pathname;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+
+        // 保存済み状態を復元
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((cb, i) => {
+            if (saved[i]) cb.checked = true;
+        });
+        updateProgress();
+
+        // 変更時に保存
+        checkboxes.forEach((cb, i) => {
+            cb.addEventListener('change', () => {
+                saved[i] = cb.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const done = [...checkboxes].filter(cb => cb.checked).length;
+            document.getElementById('progressText').textContent = done + ' / ' + total + ' 完了';
+            document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+        }
+    </script>
+</body>
+</html>
