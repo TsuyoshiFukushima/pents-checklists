@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIフィンテック活用チェックリスト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --title-color: #1a1a2e;
+            --text-color: #333333;
+            --advice-color: #555555;
+            --prep-bg: #f0f4f8;
+            --practice-bg: #fdf2f2;
+            --apply-bg: #f0fdf4;
+            --accent-color: #1a1a2e;
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            margin: 40px 20px;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--title-color); font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .subtitle { font-size: 1.1rem; color: var(--advice-color); font-weight: 400; }
+        section { margin-bottom: 30px; padding: 30px; border-radius: 12px; }
+        .section-prep { background-color: var(--prep-bg); }
+        .section-practice { background-color: var(--practice-bg); }
+        .section-apply { background-color: var(--apply-bg); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 2px;
+        }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 20px; cursor: pointer; }
+        .checkbox-wrapper { position: relative; margin-right: 15px; margin-top: 4px; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+        input[type="checkbox"]:checked { background-color: var(--accent-color); }
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+        .content-wrapper { flex: 1; }
+        .item-text { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .advice-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--advice-color);
+            background: rgba(255,255,255,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .footer-note { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; }
+        .progress-bar-wrap { background: #e0e0e0; border-radius: 8px; height: 10px; margin-bottom: 30px; }
+        .progress-bar { background: var(--accent-color); height: 10px; border-radius: 8px; transition: width 0.4s; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: var(--advice-color); margin-bottom: 20px; }
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; padding: 40px 60px; }
+            .no-print { display: none; }
+            section { break-inside: avoid; border: 1px solid #eee; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+        .btn-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AIフィンテック活用チェックリスト</h1>
+            <p class="subtitle">ロボアドと家計管理ツールを正しく使いこなすための全確認事項</p>
+        </header>
+
+        <div class="progress-text" id="progressText">0 / 19 完了</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+        
+<section class="section-prep">
+<h2>【準備編】始める前に確認すること</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">マネーフォワード MEアプリをインストールする</span>
+<span class="advice-text">アプリストアで「マネーフォワード ME」と検索。iOS/Android両対応。無料版から始めてOK。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">メインの銀行口座のネットバンキングIDとパスワードを手元に用意する</span>
+<span class="advice-text">連携設定に必要。事前に確認しておくと設定がスムーズ。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">メインのクレジットカードの会員サービスIDとパスワードを確認する</span>
+<span class="advice-text">カード会員向けWebサービスのログイン情報。カード裏面や登録メールを確認する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">証券口座（NISA・iDeCo含む）のログイン情報を確認する</span>
+<span class="advice-text">運用状況を一元管理するために必要。口座番号と初期パスワードを手元に準備する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">月の固定支出（サブスク・家賃・保険等）をざっくりリストアップする</span>
+<span class="advice-text">連携後に「正しく分類されているか」を確認するための基準になる。スマホのメモでOK。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">ロボアドバイザーのリスク診断を受けてみる</span>
+<span class="advice-text">ウェルスナビなど各サービスの「リスク診断」は5〜10問のアンケート。自分のリスク許容度（1〜5）を把握しておく。</span>
+</div></label>
+
+</section>
+<section class="section-practice">
+<h2>【実践編】ツールを使いこなすための行動</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">マネーフォワード MEでメインの銀行口座を1つ連携する</span>
+<span class="advice-text">最初はメイン口座だけでOK。設定は10〜15分程度。まずここだけ終わらせる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">メインのクレジットカードを1枚連携する</span>
+<span class="advice-text">自動仕訳が始まるので、翌日以降にカテゴリが正しいか確認する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">自動仕訳のカテゴリを月1回チェック・修正する</span>
+<span class="advice-text">「食費」「日用品」など自分の定義に合わせて修正するとAIが学習して翌月の精度が上がる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">月初に「先月の収支レポート」を確認する習慣を作る</span>
+<span class="advice-text">アプリの「グラフ」タブを月1回見るだけ。15分で完了。これだけで家計の実態が見える。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">毎月確実に余る金額を計算し、その一部をロボアドへの積立額として設定する</span>
+<span class="advice-text">マネーフォワードの収支データを見て「最低でも○万円は余る」という数字を出してから積立額を決める。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">ウェルスナビなどロボアドに少額（最低1万円）を預けてみる</span>
+<span class="advice-text">まず少額で感覚をつかむ。毎月の積立設定は後から変更可能。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">ロボアドの相場下落時も継続する（解約しない）</span>
+<span class="advice-text">2年以上継続したユーザーの9割以上がプラスリターン（ウェルスナビ公式データ）。下落時は「安く買えているタイミング」と捉える。</span>
+</div></label>
+
+</section>
+<section class="section-apply">
+<h2>【応用編】さらに効果を最大化するためのチェック</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">マネーフォワード クラウド確定申告と連携し、経費の自動仕訳を設定する</span>
+<span class="advice-text">フリーランス・個人事業主向け。経費と個人支出を自動で分離でき、確定申告作業が大幅に楽になる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">NISAとiDeCoの口座をマネーフォワード MEに連携して総資産を一元管理する</span>
+<span class="advice-text">現金・預金・投資・ポイントが一画面で見えるようになる。資産配分のバランスが把握しやすくなる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">API連携対応の銀行・カードを優先的に使う</span>
+<span class="advice-text">スクレイピングよりAPIの方が安全で精度が高い。住信SBIネット銀行・楽天銀行・GMOあおぞらネット銀行がAPI対応充実。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">「毎月○万円余ったらスポット投資」というルールを作り機械的に実行する</span>
+<span class="advice-text">感情で判断せず、データ→ルール→実行のサイクルを作る。ルールを決めるとブレが減る。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">マネーフォワード AI Cowork（2026年7月リリース予定）の情報をチェックしておく</span>
+<span class="advice-text">リリース後にバックオフィス業務の自動化ツールとして評価する。公式サイトをブックマークしておく。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">年1回、総資産・資産配分を見直してロボアドのリスク許容度設定を確認する</span>
+<span class="advice-text">収入・家族構成・目標が変わったら設定を見直す。ライフステージの変化に合わせて柔軟に調整する。</span>
+</div></label>
+
+</section>
+
+
+        <div class="footer-note">© ぺんつ - 特典チェックリスト</div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">PDFとして保存 / 印刷</button>
+
+    <script>
+        const STORAGE_KEY = 'checklist_' + location.pathname;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+
+        // 保存済み状態を復元
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((cb, i) => {
+            if (saved[i]) cb.checked = true;
+        });
+        updateProgress();
+
+        // 変更時に保存
+        checkboxes.forEach((cb, i) => {
+            cb.addEventListener('change', () => {
+                saved[i] = cb.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const done = [...checkboxes].filter(cb => cb.checked).length;
+            document.getElementById('progressText').textContent = done + ' / ' + total + ' 完了';
+            document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+        }
+    </script>
+</body>
+</html>
