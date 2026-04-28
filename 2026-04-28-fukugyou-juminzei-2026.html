@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026年版 副業税務チェックリスト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --title-color: #1a1a2e;
+            --text-color: #333333;
+            --advice-color: #555555;
+            --prep-bg: #f0f4f8;
+            --practice-bg: #fdf2f2;
+            --apply-bg: #f0fdf4;
+            --accent-color: #1a1a2e;
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            margin: 40px 20px;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--title-color); font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .subtitle { font-size: 1.1rem; color: var(--advice-color); font-weight: 400; }
+        section { margin-bottom: 30px; padding: 30px; border-radius: 12px; }
+        .section-prep { background-color: var(--prep-bg); }
+        .section-practice { background-color: var(--practice-bg); }
+        .section-apply { background-color: var(--apply-bg); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 2px;
+        }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 20px; cursor: pointer; }
+        .checkbox-wrapper { position: relative; margin-right: 15px; margin-top: 4px; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+        input[type="checkbox"]:checked { background-color: var(--accent-color); }
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+        .content-wrapper { flex: 1; }
+        .item-text { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .advice-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--advice-color);
+            background: rgba(255,255,255,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .footer-note { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; }
+        .progress-bar-wrap { background: #e0e0e0; border-radius: 8px; height: 10px; margin-bottom: 30px; }
+        .progress-bar { background: var(--accent-color); height: 10px; border-radius: 8px; transition: width 0.4s; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: var(--advice-color); margin-bottom: 20px; }
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; padding: 40px 60px; }
+            .no-print { display: none; }
+            section { break-inside: avoid; border: 1px solid #eee; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+        .btn-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>2026年版 副業税務チェックリスト</h1>
+            <p class="subtitle">令和7・8年度改正後の申告で損しないための全確認リスト</p>
+        </header>
+
+        <div class="progress-text" id="progressText">0 / 18 完了</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+        
+<section class="section-prep">
+<h2>【準備編】申告前に確認すること</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">副業収入の年間合計を集計する</span>
+<span class="advice-text">クラウドソーシングサイトの報酬明細・振込明細・源泉徴収票等をもとに1〜12月分の収入を全て集計する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">副業の所得区分（給与か業務委託か）を確認する</span>
+<span class="advice-text">副業先との契約書を確認し、雇用契約なら「給与」、業務委託契約なら「事業所得/雑所得」として申告することになる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">副業所得が年間20万円を超えているか確認する</span>
+<span class="advice-text">収入から経費を差し引いた「所得」が20万円超なら所得税の確定申告が必要。20万円以下でも住民税の申告が必要な場合がある。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">副業に関連する経費をリストアップする</span>
+<span class="advice-text">書籍代・通信費・交通費・機材費・サブスクリプション費等を書き出す。自宅を仕事場にしている場合は家賃・光熱費の按分計算も行う。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">令和7年度改正の基礎控除引き上げが自分に影響するか確認する</span>
+<span class="advice-text">合計所得金額が132万円以下の場合、基礎控除は最大95万円（旧48万円）。合計所得を把握することで恩恵の大きさがわかる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">青色申告の適用可否を確認する</span>
+<span class="advice-text">副業が継続的・反復的で帳簿書類を保存しているなら事業所得として申告でき、開業届と青色申告承認申請書を提出すれば65万円の特別控除が受けられる。</span>
+</div></label>
+
+</section>
+<section class="section-practice">
+<h2>【実践編】確定申告の実行チェック</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">会計ソフトで副業の収支を入力する</span>
+<span class="advice-text">freeeまたはマネーフォワード クラウド確定申告で収入・経費を入力し、収支内訳書または損益計算書を作成する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">副業収入を全て計上する</span>
+<span class="advice-text">見落としがちな年末・年初の入金も含め、1〜12月の全ての報酬・振込を網羅する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">経費を全て入力する</span>
+<span class="advice-text">書籍・交通費・通信費・機材費・サブスク費などを勘定科目ごとに入力し、按分計算が必要なものは割合を記載する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">第二表の住民税欄で「自分で納付（普通徴収）」を選択する</span>
+<span class="advice-text">業務委託形式の副業の場合、確定申告書第二表の「住民税の徴収方法」欄で「自分で納付」を必ず選択する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">お住まいの自治体で普通徴収が選択可能か事前確認する</span>
+<span class="advice-text">一部自治体（例：大阪府吹田市）では令和9年度以降、給与に係る住民税の普通徴収が選択不可に。自治体の公式サイトまたは窓口で確認する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">マイナンバーカードを使ってe-Taxで提出する</span>
+<span class="advice-text">2026年分の申告からマイナンバーカード方式が原則。申告期限（通常3月15日前後）の2週間前までには完成させる。</span>
+</div></label>
+
+</section>
+<section class="section-apply">
+<h2>【応用編】節税効果を最大化するためのチェック</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">副業所得が年間50万円を超えていたら青色申告への移行を検討する</span>
+<span class="advice-text">開業届と青色申告承認申請書を提出すれば65万円の特別控除が使え、年間最大13万円程度の節税になる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">事業所得として申告できる場合、小規模企業共済への加入を検討する</span>
+<span class="advice-text">掛け金全額が所得控除になる。月7万円掛けた場合、年間約16.8万円の節税効果がある（中小機構の制度）。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">iDeCoの拠出額を副業所得に合わせて見直す</span>
+<span class="advice-text">会社員は月最大2.3万円まで拠出可能。副業で課税所得が増えた年ほど、iDeCoの節税効果が高くなる。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">ふるさと納税の控除上限を副業所得込みで再計算する</span>
+<span class="advice-text">副業所得が増えると住民税課税所得も増え、ふるさと納税の上限も増える。シミュレーターで再計算し、増えた分を活用する。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">2026年10月の社会保険適用拡大への対応を確認する</span>
+<span class="advice-text">副業が雇用契約で週20時間以上の場合、106万円の壁撤廃（2026年10月）により副業先でも社会保険加入が必要になる可能性がある。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">令和8年度の物価連動型基礎控除の動向をウォッチする</span>
+<span class="advice-text">令和7年12月26日閣議決定の税制改正大綱に盛り込まれた仕組み。2年ごとにCPIに連動して控除が調整される。施行時期と金額を確認する。</span>
+</div></label>
+
+</section>
+
+
+        <div class="footer-note">© ぺんつ - 特典チェックリスト</div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">PDFとして保存 / 印刷</button>
+
+    <script>
+        const STORAGE_KEY = 'checklist_' + location.pathname;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+
+        // 保存済み状態を復元
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((cb, i) => {
+            if (saved[i]) cb.checked = true;
+        });
+        updateProgress();
+
+        // 変更時に保存
+        checkboxes.forEach((cb, i) => {
+            cb.addEventListener('change', () => {
+                saved[i] = cb.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const done = [...checkboxes].filter(cb => cb.checked).length;
+            document.getElementById('progressText').textContent = done + ' / ' + total + ' 完了';
+            document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+        }
+    </script>
+</body>
+</html>
