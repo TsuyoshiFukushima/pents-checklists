@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンテキスト設計 実践チェックリスト（全19項目）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --title-color: #1a1a2e;
+            --text-color: #333333;
+            --advice-color: #555555;
+            --prep-bg: #f0f4f8;
+            --practice-bg: #fdf2f2;
+            --apply-bg: #f0fdf4;
+            --accent-color: #1a1a2e;
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            margin: 40px 20px;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--title-color); font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .subtitle { font-size: 1.1rem; color: var(--advice-color); font-weight: 400; }
+        section { margin-bottom: 30px; padding: 30px; border-radius: 12px; }
+        .section-prep { background-color: var(--prep-bg); }
+        .section-practice { background-color: var(--practice-bg); }
+        .section-apply { background-color: var(--apply-bg); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 2px;
+        }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 20px; cursor: pointer; }
+        .checkbox-wrapper { position: relative; margin-right: 15px; margin-top: 4px; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+        input[type="checkbox"]:checked { background-color: var(--accent-color); }
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+        .content-wrapper { flex: 1; }
+        .item-text { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .advice-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--advice-color);
+            background: rgba(255,255,255,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .footer-note { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; }
+        .progress-bar-wrap { background: #e0e0e0; border-radius: 8px; height: 10px; margin-bottom: 30px; }
+        .progress-bar { background: var(--accent-color); height: 10px; border-radius: 8px; transition: width 0.4s; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: var(--advice-color); margin-bottom: 20px; }
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; padding: 40px 60px; }
+            .no-print { display: none; }
+            section { break-inside: avoid; border: 1px solid #eee; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+        .btn-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>コンテキスト設計 実践チェックリスト（全19項目）</h1>
+            <p class="subtitle">プロンプトから1段上がる——ChatGPT/Claudeを思い通りに動かす前確認リスト</p>
+        </header>
+
+        <div class="progress-text" id="progressText">0 / 19 完了</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+        
+<section class="section-prep">
+<h2>【準備編】コンテキスト設計を始める前に確認すること</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">タスクの目的と対象読者を1文で書く</span>
+<span class="advice-text">「誰のために・何のために作るか」を言語化するだけで、AIへの指示が劇的に明確になります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AIに演じさせる「役割」を具体的に決める</span>
+<span class="advice-text">「〇〇業界に10年のライター」のように、経験・専門領域・立場を具体的に設定しましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">タスクに関係する参照情報を手元に準備する</span>
+<span class="advice-text">過去の文章・関連資料・参考URLの内容など。「このタスクに本当に必要な情報」だけを絞り込んでおく。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">制約リストを箇条書きでまとめる</span>
+<span class="advice-text">「してはいけないこと」と「必ずすること」を事前に洗い出す。後から追加するより最初に設計するほうが効率的。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">「どんな出力であれば成功か」を一文で定義する</span>
+<span class="advice-text">成功基準を明示するだけでAIの出力品質が変わります。例:「先方から返信がもらえる内容であれば成功」。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">使用するAIツールとモデル名を確認する</span>
+<span class="advice-text">ChatGPT(GPT-4o)/Claude 3.7/Gemini 2.0などモデルによってトークン上限や挙動が異なります。使用モデルを記録する習慣をつけましょう。</span>
+</div></label>
+
+</section>
+<section class="section-practice">
+<h2>【実践編】ChatGPT/Claudeで実行するための判断軸</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">「役割層→背景層→制約層→タスク層」の順でコンテキストを組み立てる</span>
+<span class="advice-text">この順番が重要です。タスクを先に出すのではなく、文脈をすべて渡してからタスクを伝えましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">参照情報は「タスクに関係する部分だけ」を抜粋して貼る</span>
+<span class="advice-text">長い資料を丸ごとコピペしない。AIはコンテキスト内のどの情報を優先すべきか完全には判断できません。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">最初の回答を評価し、外れていれば「何が足りなかったか」を分析する</span>
+<span class="advice-text">プロンプトを変えるより先に、「渡した背景情報は十分だったか？」を確認する習慣が大切です。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">うまくいかないときは「制約を追加する」より「背景情報を補足する」から試す</span>
+<span class="advice-text">多くの場合、問題は指示の書き方より「文脈情報の不足」にあります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">長い会話が続いたら「重要な前提を箇条書きでまとめてください」と頼んで圧縮する</span>
+<span class="advice-text">このまとめを新しいチャットの冒頭に貼り直すことで、精度を維持したまま会話を引き継げます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">成功したコンテキスト設計はメモ帳に保存し、再利用できるようにする</span>
+<span class="advice-text">「うまくいったのに次回また手探り」は時間のムダ。テンプレート化して資産にしましょう。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">同じタスクを「コンテキストあり」と「なし」で試して、差を体感する</span>
+<span class="advice-text">この体験が一番の学習です。差がわかれば、コンテキスト設計への投資意欲が自然と上がります。</span>
+</div></label>
+
+</section>
+<section class="section-apply">
+<h2>【応用編】コンテキストを「資産」にするための仕組み化チェック</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">よく使うコンテキストをChatGPTの「カスタム指示」に登録する</span>
+<span class="advice-text">全チャットに適用されるデフォルトコンテキスト。役割定義と好みの文体を入力しておくだけで毎回の手間が減ります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">ClaudeのProjects機能でプロジェクト別コンテキストを永続化する</span>
+<span class="advice-text">有料プランのProjects機能でプロジェクト単位のシステム指示を設定。SEO記事・メール・提案書など用途別に作るのがおすすめ。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">Notionやメモアプリでタスクごとのコンテキストライブラリを作る</span>
+<span class="advice-text">タスク名・役割定義・制約リスト・最終確認日・使用モデルを記録。これが自分だけの「AI活用資産」になります。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">参照資料を手動でコンテキストに貼る「貧乏人のRAG」を試す</span>
+<span class="advice-text">技術的なRAGシステムを使わなくても、資料の関連部分を貼るだけでRAGに近い効果が得られます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">コンテキストを少し変えた2パターンで出力品質を比較するA/Bテストを実施する</span>
+<span class="advice-text">変える要素は「役割定義の詳細度」「制約の数」「参照情報の有無」など。スコアリングして記録することで最適解が見えてきます。</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">月1回、主要テンプレートの動作確認をする</span>
+<span class="advice-text">AIモデルは頻繁に更新されます。先月うまく動いたコンテキストが今月もベストとは限りません。定期メンテナンスを習慣に。</span>
+</div></label>
+
+</section>
+
+
+        <div class="footer-note">© ぺんつ - 特典チェックリスト</div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">PDFとして保存 / 印刷</button>
+
+    <script>
+        const STORAGE_KEY = 'checklist_' + location.pathname;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+
+        // 保存済み状態を復元
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((cb, i) => {
+            if (saved[i]) cb.checked = true;
+        });
+        updateProgress();
+
+        // 変更時に保存
+        checkboxes.forEach((cb, i) => {
+            cb.addEventListener('change', () => {
+                saved[i] = cb.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const done = [...checkboxes].filter(cb => cb.checked).length;
+            document.getElementById('progressText').textContent = done + ' / ' + total + ' 完了';
+            document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+        }
+    </script>
+</body>
+</html>
