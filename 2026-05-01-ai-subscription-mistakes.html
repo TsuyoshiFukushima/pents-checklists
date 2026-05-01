@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIサービス課金前チェックリスト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --title-color: #1a1a2e;
+            --text-color: #333333;
+            --advice-color: #555555;
+            --prep-bg: #f0f4f8;
+            --practice-bg: #fdf2f2;
+            --apply-bg: #f0fdf4;
+            --accent-color: #1a1a2e;
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            margin: 40px 20px;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--title-color); font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .subtitle { font-size: 1.1rem; color: var(--advice-color); font-weight: 400; }
+        section { margin-bottom: 30px; padding: 30px; border-radius: 12px; }
+        .section-prep { background-color: var(--prep-bg); }
+        .section-practice { background-color: var(--practice-bg); }
+        .section-apply { background-color: var(--apply-bg); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 2px;
+        }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 20px; cursor: pointer; }
+        .checkbox-wrapper { position: relative; margin-right: 15px; margin-top: 4px; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+        input[type="checkbox"]:checked { background-color: var(--accent-color); }
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+        .content-wrapper { flex: 1; }
+        .item-text { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .advice-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--advice-color);
+            background: rgba(255,255,255,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .footer-note { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; }
+        .progress-bar-wrap { background: #e0e0e0; border-radius: 8px; height: 10px; margin-bottom: 30px; }
+        .progress-bar { background: var(--accent-color); height: 10px; border-radius: 8px; transition: width 0.4s; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: var(--advice-color); margin-bottom: 20px; }
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; padding: 40px 60px; }
+            .no-print { display: none; }
+            section { break-inside: avoid; border: 1px solid #eee; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+        .btn-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AIサービス課金前チェックリスト</h1>
+            <p class="subtitle">「本当に必要なプランはどれか」を課金前に5分で確認する</p>
+        </header>
+
+        <div class="progress-text" id="progressText">0 / 16 完了</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+        
+        <section class="section-prep">
+          <h2>【準備編】課金前に確認すること</h2>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">AIを使いたい目的を具体的に3つ書き出す</span>
+            <span class="advice-text">「便利そう」ではなく「週〇時間の〇〇作業を減らしたい」という形で書く。書けない場合は課金の検討を1ヶ月後に先送りしよう。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">現在使っているAIサービスと月額費用を全て一覧化する</span>
+            <span class="advice-text">サブスクだけでなく、API費用や追加クレジットも含めて書き出す。「払っているけど使っていない」ものがあればすぐ解約候補に。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">課金候補のサービスの無料プランを実際に使ってみる</span>
+            <span class="advice-text">ChatGPT・Claude・Geminiはいずれも無料プランあり。まず全部無料で試してから比較する。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">「無料版の制限に月3回以上ぶつかったか」を確認する</span>
+            <span class="advice-text">ぶつかったことがないなら、まだ無料版で十分な可能性が高い。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">月額費用を「時給換算での元が取れる条件」で確認する</span>
+            <span class="advice-text">月3,000円なら時給2,000円の場合は月1.5時間の時短で元が取れる。この条件が現実的かどうか確認する。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">同じプロンプトを複数のサービスで試して比較する</span>
+            <span class="advice-text">「ChatGPTのほうが良い」「Claudeのほうが良い」は用途によって変わる。自分の使い方で比べることが大事。</span>
+          </div>
+        </label>
+        </section>
+        <section class="section-practice">
+          <h2>【実践編】課金後に実行すること</h2>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">用途を「文章作成」「調査」「コーディング」「その他」に分類する</span>
+            <span class="advice-text">全部同じAIに頼るのをやめ、用途ごとに最適なサービスを使い分けるための最初の一歩。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">主な用途ごとに「最適なサービス」を1つ仮決めする</span>
+            <span class="advice-text">コーディング→Claude、リサーチ→Gemini、汎用文章→ChatGPTが一般的な出発点。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">よく使うプロンプトを「型」にしてメモ帳やNotionに保存する</span>
+            <span class="advice-text">「背景・タスク・条件・出力形式」の4要素を含む型を3〜5つ作るとすぐ使い回せる。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">週1回、「AIを使って何分短縮できたか」をメモする</span>
+            <span class="advice-text">月末に集計することで、課金の費用対効果が客観的に判断できるようになる。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">課金中のサービスで「制限にぶつかった体験」を記録する</span>
+            <span class="advice-text">「この日、この用途で制限に当たった」というメモが、課金判断の正確な根拠になる。</span>
+          </div>
+        </label>
+        </section>
+        <section class="section-apply">
+          <h2>【応用編】コストを最適化するための確認</h2>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">月次でAIサービスに関連した全支出（API費用含む）を確認する</span>
+            <span class="advice-text">サブスクだけで考えると実態とズレる。API費用が静かに増えていることがよくある。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">API利用の場合は月次上限額を必ず設定する</span>
+            <span class="advice-text">ChatGPT APIはplatform.openai.com → Settings → Limits、Anthropic APIはconsole.anthropic.com → Settings → Billing で設定できる。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">同じプロンプトで有料版と無料版の品質を月1回比較する</span>
+            <span class="advice-text">差が感じられなければ、その用途では有料版が不要かもしれない。定期的な見直しが節約につながる。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">「使っていないのに払っているサービス」を1つ解約する</span>
+            <span class="advice-text">解約に迷ったら「1ヶ月使わなかったら解約」をルールにすると判断が楽になる。</span>
+          </div>
+        </label>
+        <label class="checklist-item">
+          <div class="checkbox-wrapper"><input type="checkbox"></div>
+          <div class="content-wrapper">
+            <span class="item-text">課金コストと時短効果を月単位で記録して費用対効果を計算する</span>
+            <span class="advice-text">時間削減分 × 時給 ÷ 月額 = 費用対効果の倍率。1を切っていたら課金を見直すシグナル。</span>
+          </div>
+        </label>
+        </section>
+
+
+        <div class="footer-note">© ぺんつ - 特典チェックリスト</div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">PDFとして保存 / 印刷</button>
+
+    <script>
+        const STORAGE_KEY = 'checklist_' + location.pathname;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+
+        // 保存済み状態を復元
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((cb, i) => {
+            if (saved[i]) cb.checked = true;
+        });
+        updateProgress();
+
+        // 変更時に保存
+        checkboxes.forEach((cb, i) => {
+            cb.addEventListener('change', () => {
+                saved[i] = cb.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const done = [...checkboxes].filter(cb => cb.checked).length;
+            document.getElementById('progressText').textContent = done + ' / ' + total + ' 完了';
+            document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+        }
+    </script>
+</body>
+</html>
