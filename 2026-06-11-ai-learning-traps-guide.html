@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「AIが全部やってくれる」は罠だった──初心者のAI学習失敗チェックリスト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --title-color: #1a1a2e;
+            --text-color: #333333;
+            --advice-color: #555555;
+            --prep-bg: #f0f4f8;
+            --practice-bg: #fdf2f2;
+            --apply-bg: #f0fdf4;
+            --accent-color: #1a1a2e;
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            margin: 40px 20px;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h1 { color: var(--title-color); font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 700; }
+        .subtitle { font-size: 1.1rem; color: var(--advice-color); font-weight: 400; }
+        section { margin-bottom: 30px; padding: 30px; border-radius: 12px; }
+        .section-prep { background-color: var(--prep-bg); }
+        .section-practice { background-color: var(--practice-bg); }
+        .section-apply { background-color: var(--apply-bg); }
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 2px;
+        }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 20px; cursor: pointer; }
+        .checkbox-wrapper { position: relative; margin-right: 15px; margin-top: 4px; }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+        }
+        input[type="checkbox"]:checked { background-color: var(--accent-color); }
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+        .content-wrapper { flex: 1; }
+        .item-text { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .advice-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--advice-color);
+            background: rgba(255,255,255,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #ccc;
+        }
+        .footer-note { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; }
+        .progress-bar-wrap { background: #e0e0e0; border-radius: 8px; height: 10px; margin-bottom: 30px; }
+        .progress-bar { background: var(--accent-color); height: 10px; border-radius: 8px; transition: width 0.4s; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: var(--advice-color); margin-bottom: 20px; }
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; padding: 40px 60px; }
+            .no-print { display: none; }
+            section { break-inside: avoid; border: 1px solid #eee; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+        .btn-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>「AIが全部やってくれる」は罠だった──初心者のAI学習失敗チェックリスト</h1>
+            <p class="subtitle">ChatGPT・Claude・NotebookLMを正しく使い分けて本当の実力をつける</p>
+        </header>
+
+        <div class="progress-text" id="progressText">0 / 17 完了</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+        
+<section class="section-prep">
+<h2>【準備編】</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">学習目標を「○月までに○○を作る」と具体的に設定する</span>
+<span class="advice-text">漠然と「Pythonを学ぶ」ではなく「3ヶ月後に簡単なWebアプリを作れる」と期限付きで決める</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">使うAIツールを最大3つに絞る（ChatGPT・Claude・NotebookLMがおすすめ）</span>
+<span class="advice-text">ツールを増やすほど「ツールの使い方研究」に時間を取られる。まずはこの3つだけ</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">NotebookLMに学習教材（PDFやURLなど）をアップロードしてノートブックを作成する</span>
+<span class="advice-text">まず1冊の技術書か公式ドキュメントを1つだけ登録してみる。notebooklm.google.comで無料で使える</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">「エラーログメモ」の記録場所を決める（テキストファイルやNotionなど）</span>
+<span class="advice-text">出会ったエラーと解決策を貯めていく「自分専用辞典」の基盤になる。後でNotebookLMに登録する</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">「詰まってから10分は自力で考えてからAIに聞く」10分ルールを自分の決まりとして設定する</span>
+<span class="advice-text">この10分が学習効果を最も高める時間。答えが出なくてもいい、「何がわからないか」を言語化できれば合格</span>
+</div></label>
+
+</section>
+<section class="section-practice">
+<h2>【実践編】</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">コードをAIに生成してもらったら必ず「なぜこう書くか説明して」と続けて質問する</span>
+<span class="advice-text">「説明できない＝まだ理解していない」サイン。この一言を続けるだけで学習効果が大きく変わる</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AIの説明を聞いたあと、コードを一度消して自分の手で書き直す</span>
+<span class="advice-text">「書き直せない」＝「読んだだけで終わっている」。手を動かした回数だけ実力になる</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AIへの質問に「背景・試したこと・何を理解したいか」を含める</span>
+<span class="advice-text">「直して」より「なぜこのエラーが出るか教えて」のほうが10倍学べる。質問の質が学習の質</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">NotebookLMで登録した教材から週1回フラッシュカードを生成する</span>
+<span class="advice-text">「重要概念を10個選んでフラッシュカードを作って」と依頼するだけ。復習の手間がゼロになる</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">週1回「AI無し縛り」で小さな課題を解く</span>
+<span class="advice-text">今週学んだことが本当に身についているかを確認できる唯一の方法。30分でできる小さな課題でOK</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">Claudeに月1回「コードレビュー採点」を依頼する</span>
+<span class="advice-text">可読性・効率性・エラーハンドリング・セキュリティの4項目で採点してもらう。数値化すると成長が見える</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">AIが教えた技術名・ライブラリ名は必ず公式ドキュメントで確認する</span>
+<span class="advice-text">ハルシネーション（AIの作り話）対策として最も重要な習慣。初心者ほど嘘に気づけないので要注意</span>
+</div></label>
+
+</section>
+<section class="section-apply">
+<h2>【応用編】</h2>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">ChatGPTに「ソクラテス式問答モードで教えて」と宣言してから質問する</span>
+<span class="advice-text">「答えを教えず質問で理解を引き出してください」と先に指示するだけ。自分で答えに辿り着く体験が最も記憶に残る</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">ClaudeのProjects機能で「専用家庭教師AI」を設定する</span>
+<span class="advice-text">「初心者向けに、答えを教えず考え方を導くように教えて」というシステム指示を登録すれば毎回指定不要</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">NotebookLMの音声概要を通勤・家事中に聞く習慣をつける</span>
+<span class="advice-text">技術文書が「聴けるポッドキャスト」に変わり、スキマ時間が学習時間になる。1日15分の積み上げは大きい</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">間違えた問題や詰まりポイントをNotebookLMに蓄積して「弱点クイズ」を定期生成する</span>
+<span class="advice-text">苦手な部分だけを凝縮した個別問題集が自動で作れる。1ヶ月続けると劇的に効率が上がる</span>
+</div></label>
+<label class="checklist-item">
+<div class="checkbox-wrapper"><input type="checkbox"></div>
+<div class="content-wrapper">
+<span class="item-text">週1回Claudeに「今週の学習進捗を話して来週の優先テーマを提案してもらう」コーチングを実施する</span>
+<span class="advice-text">自分1人では気づけない学習の偏りや抜けを発見できる。週30分の投資で学習の方向性が整う</span>
+</div></label>
+
+</section>
+
+
+        <div class="footer-note">© ぺんつ - 特典チェックリスト</div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">PDFとして保存 / 印刷</button>
+
+    <script>
+        const STORAGE_KEY = 'checklist_' + location.pathname;
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+
+        // 保存済み状態を復元
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((cb, i) => {
+            if (saved[i]) cb.checked = true;
+        });
+        updateProgress();
+
+        // 変更時に保存
+        checkboxes.forEach((cb, i) => {
+            cb.addEventListener('change', () => {
+                saved[i] = cb.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const done = [...checkboxes].filter(cb => cb.checked).length;
+            document.getElementById('progressText').textContent = done + ' / ' + total + ' 完了';
+            document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+        }
+    </script>
+</body>
+</html>
