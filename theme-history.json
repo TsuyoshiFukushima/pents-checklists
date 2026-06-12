@@ -94,5 +94,11 @@
     "genre": "学習・スキルアップ",
     "theme": "AIを使った学習効率化の方法",
     "keyword": "「AIが全部やってくれる」は罠──初心者AI学習失敗5パターンとChatGPT・Claude・NotebookLM使い分け"
+  },
+  {
+    "date": "2026-06-12",
+    "genre": "AI実践",
+    "theme": "業務効率化AIの具体的活用法（議事録・メール・資料作成）",
+    "keyword": "Notta×ChatGPT議事録→メール自動化フロー"
   }
 ]
